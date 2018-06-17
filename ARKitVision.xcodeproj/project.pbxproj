@@ -40,7 +40,7 @@
 		C1CE442A20D5D4460087D764 /* ImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = ImageClassifier.mlmodel; path = ../../../../Documents/ImageClassifier.mlmodel; sourceTree = "<group>"; };
 		C1CE442C20D5E04B0087D764 /* ParkerEggImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = ParkerEggImageClassifier.mlmodel; path = ../../../../Documents/ParkerEggImageClassifier.mlmodel; sourceTree = "<group>"; };
 		C1CE442E20D5E7BE0087D764 /* BothImageClassifier.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = BothImageClassifier.mlmodel; path = ../../../../Documents/BothImageClassifier.mlmodel; sourceTree = "<group>"; };
-		C1CE443020D5ED830087D764 /* ParkerEggImageClassifier2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; name = ParkerEggImageClassifier2.mlmodel; path = ../../../../Documents/ParkerEggImageClassifier2.mlmodel; sourceTree = "<group>"; };
+		C1CE443020D5ED830087D764 /* ParkerEggImageClassifier2.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = ParkerEggImageClassifier2.mlmodel; sourceTree = "<group>"; };
 		F4586FD0F458700000000001 /* SampleCode.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = SampleCode.xcconfig; path = Configuration/SampleCode.xcconfig; sourceTree = "<group>"; };
 		F6E1AB00F6E03E7000000001 /* LICENSE.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -99,12 +99,12 @@
 		841E31011FC287CA00F639ED /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C1CE443020D5ED830087D764 /* ParkerEggImageClassifier2.mlmodel */,
-				C1CE442E20D5E7BE0087D764 /* BothImageClassifier.mlmodel */,
-				C1CE442C20D5E04B0087D764 /* ParkerEggImageClassifier.mlmodel */,
-				C1CE442A20D5D4460087D764 /* ImageClassifier.mlmodel */,
 				68612C3A1F7B0746002209A3 /* Assets.xcassets */,
 				68612C461F7B108A002209A3 /* Inceptionv3.mlmodel */,
+				C1CE442A20D5D4460087D764 /* ImageClassifier.mlmodel */,
+				C1CE442C20D5E04B0087D764 /* ParkerEggImageClassifier.mlmodel */,
+				C1CE442E20D5E7BE0087D764 /* BothImageClassifier.mlmodel */,
+				C1CE443020D5ED830087D764 /* ParkerEggImageClassifier2.mlmodel */,
 				68612C3F1F7B0746002209A3 /* Info.plist */,
 				68A81B55200FE12E00A4ABCA /* LabelScene.sks */,
 				68612C3C1F7B0746002209A3 /* LaunchScreen.storyboard */,
