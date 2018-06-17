@@ -13,6 +13,7 @@ import Vision
 class ViewController: UIViewController, UIGestureRecognizerDelegate, ARSKViewDelegate, ARSessionDelegate {
     
     @IBOutlet weak var sceneView: ARSKView!
+    @IBOutlet weak var iSeeParkerLabel: UILabel!
     
     // The view controller that displays the status and "restart experience" UI.
     private lazy var statusViewController: StatusViewController = {
@@ -77,7 +78,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, ARSKViewDel
     private lazy var classificationRequest: VNCoreMLRequest = {
         do {
             // Instantiate the model from its generated Swift class.
-            let model = try VNCoreMLModel(for: Inceptionv3().model)
+            let model = try VNCoreMLModel(for: ParkerEggImageClassifier2().model)
             let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
                 self?.processClassifications(for: request, error: error)
             })
@@ -121,6 +122,8 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, ARSKViewDel
     // Classification results
     private var identifierString = ""
     private var confidence: VNConfidence = 0.0
+    private var identifierString2 = ""
+    private var confidence2: VNConfidence = 0.0
     
     // Handle completion of the Vision request and choose results to display.
     /// - Tag: ProcessClassifications
@@ -130,18 +133,47 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, ARSKViewDel
             return
         }
         // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
-        let classifications = results as! [VNClassificationObservation]
+        var classifications = results as! [VNClassificationObservation]
+        classifications.sort(by: { $0.confidence > $1.confidence })
         
         // Show a label for the highest-confidence result (but only above a minimum confidence threshold).
-        if let bestResult = classifications.first(where: { result in result.confidence > 0.5 }),
-            let label = bestResult.identifier.split(separator: ",").first {
-            identifierString = String(label)
+        if let bestResult = classifications.first {
+            identifierString = bestResult.identifier
             confidence = bestResult.confidence
+            DispatchQueue.main.async {
+//                let idString = self.identifierString == "Both" ? "both 🐻 and 🥚" : self.identifierString
+                self.iSeeParkerLabel.text = "I 👀 \(self.identifierString)"
+                switch self.identifierString {
+                case "Parker":
+                    self.iSeeParkerLabel.textColor = .red
+                case "Egg":
+                    self.iSeeParkerLabel.textColor = .blue
+                default:
+                    self.iSeeParkerLabel.textColor = .green
+                }
+                
+                if self.identifierString == "Nothing" {
+                    self.iSeeParkerLabel.isHidden = true
+                } else {
+                    self.iSeeParkerLabel.isHidden = self.confidence < 0.5
+                }
+            }
+//        if let parkerResult = classifications.filter({ $0.identifier == "Parker" }).first {
+//            identifierString = parkerResult.identifier
+//            confidence = parkerResult.confidence
+//            DispatchQueue.main.async {
+//                self.iSeeParkerLabel.isHidden = self.confidence < 0.5
+//            }
         } else {
             identifierString = ""
             confidence = 0
         }
         
+        if classifications.count >= 2 {
+            identifierString2 = classifications[1].identifier
+            confidence2 = classifications[1].confidence
+        }
+    
         DispatchQueue.main.async { [weak self] in
             self?.displayClassifierResults()
         }
@@ -152,7 +184,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate, ARSKViewDel
         guard !self.identifierString.isEmpty else {
             return // No object was classified.
         }
-        let message = String(format: "Detected \(self.identifierString) with %.2f", self.confidence * 100) + "% confidence"
+        let message = String(format: "\(self.identifierString) with %.2f%% confidence \n\(self.identifierString2) with %.2f", self.confidence * 100, self.confidence2 * 100) + "% confidence"
         statusViewController.showMessage(message)
     }
     
